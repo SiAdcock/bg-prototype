@@ -11,15 +11,33 @@ class Game extends React.Component {
 
     this.state = {
       wizard: {
+        isMyTurn: true,
         deck: wizard.deck,
         summoned: []
       },
       fighter: {
+        isMyTurn: false,
         deck: fighter.deck,
         summoned: []
       }
     };
   }
+
+  turnOver() {
+    this.setState({
+      wizard: {
+        isMyTurn: !this.state.wizard.isMyTurn,
+        deck: this.state.wizard.deck.slice(),
+        summoned: this.state.wizard.summoned.slice()
+      },
+      fighter: {
+        isMyTurn: !this.state.fighter.isMyTurn,
+        deck: this.state.fighter.deck.slice(),
+        summoned: this.state.fighter.summoned.slice()
+      }
+    });
+  }
+
   summon(player, cardId) {
     console.log('Summoning', cardId);
 
@@ -33,10 +51,12 @@ class Game extends React.Component {
     this.setState({
       [player]: {
         deck: remainingDeck,
-        summoned: nowSummoned
+        summoned: nowSummoned,
+        isMyTurn: this.state[player].isMyTurn
       }
     });
   }
+
   render() {
     return (
       <div>
@@ -44,7 +64,8 @@ class Game extends React.Component {
           name="Player 1"
           playerClass={wizard.playerClassName}
           deck={this.state.wizard.deck}
-          summon={this.summon.bind(this, 'wizard')}
+          summon={this.state.wizard.isMyTurn && this.summon.bind(this, 'wizard')}
+          turnOver={this.state.wizard.isMyTurn && this.turnOver.bind(this)}
         />
         <Battlefield
           player1Summoned={this.state.wizard.summoned}
@@ -54,7 +75,8 @@ class Game extends React.Component {
           name="Player 2"
           playerClass={fighter.playerClassName}
           deck={this.state.fighter.deck}
-          summon={this.summon.bind(this, 'fighter')}
+          summon={this.state.fighter.isMyTurn && this.summon.bind(this, 'fighter')}
+          turnOver={this.state.fighter.isMyTurn && this.turnOver.bind(this)}
         />
       </div>
     );

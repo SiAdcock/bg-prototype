@@ -7,7 +7,7 @@ class Hand extends React.Component {
   render() {
     let summonBtn;
 
-    if (this.props.isSummonable) {
+    if (this.props.summon) {
       summonBtn = (
         <button
           onClick={this.summon.bind(this)}

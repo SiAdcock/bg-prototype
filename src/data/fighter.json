@@ -1,0 +1,19 @@
+{
+  "playerClassName": "Fighter",
+  "deck": [
+    {
+      "name": "Swordsman",
+      "image": "swordsman.png",
+      "mana": 1,
+      "attack": 2,
+      "defence": 2
+    },
+    {
+      "name": "Swordsman",
+      "image": "swordsman.png",
+      "mana": 1,
+      "attack": 2,
+      "defence": 2
+    }
+  ]
+}

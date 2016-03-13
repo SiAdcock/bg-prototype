@@ -12,10 +12,13 @@ class Player extends React.Component {
     }
     return (
       <div className="player">
-        <h1>{this.props.name}</h1>
+        <h1>{this.props.name} - {this.props.playerClassName}</h1>
+        <div>Health: {this.props.health}</div>
+        <div>Mana: {this.props.mana}</div>
         <Hand
           cards={this.props.deck}
           summon={this.props.summon}
+          mana={this.props.mana}
         />
         {turnOverBtn}
       </div>

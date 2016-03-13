@@ -5,13 +5,13 @@ class Hand extends React.Component {
   render() {
     const cards = this.props.cards.map((card) => {
       const key = `summoned-card-${card.id}`;
+      const isSummonable = this.props.mana - card.mana >= 0;
 
       return (
         <Card
           key={key}
           card={card}
-          summon={this.props.summon}
-          isSummonable={true}
+          summon={isSummonable && this.props.summon}
         />
       );
     });

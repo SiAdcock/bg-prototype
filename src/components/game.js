@@ -2,8 +2,8 @@ import React from 'react';
 import { find } from 'lodash';
 import Player from './player';
 import Battlefield from './battlefield';
-const fighter = require('../data/fighter.json');
-const wizard = require('../data/wizard.json');
+const fighterData = require('../data/fighter.json');
+const wizardData = require('../data/wizard.json');
 
 class Game extends React.Component {
   constructor(props) {
@@ -12,48 +12,54 @@ class Game extends React.Component {
     this.state = {
       wizard: {
         isMyTurn: true,
-        deck: wizard.deck,
-        summoned: []
+        deck: wizardData.deck,
+        summoned: [],
+        mana: 2,
+        health: 20
       },
       fighter: {
         isMyTurn: false,
-        deck: fighter.deck,
-        summoned: []
+        deck: fighterData.deck,
+        summoned: [],
+        mana: 1,
+        health: 20
       }
     };
   }
 
   turnOver() {
-    this.setState({
-      wizard: {
-        isMyTurn: !this.state.wizard.isMyTurn,
-        deck: this.state.wizard.deck.slice(),
-        summoned: this.state.wizard.summoned.slice()
-      },
-      fighter: {
-        isMyTurn: !this.state.fighter.isMyTurn,
-        deck: this.state.fighter.deck.slice(),
-        summoned: this.state.fighter.summoned.slice()
-      }
+    const wizard = Object.assign({}, this.state.wizard, {
+      isMyTurn: !this.state.wizard.isMyTurn,
+      deck: this.state.wizard.deck.slice(),
+      summoned: this.state.wizard.summoned.slice(),
+      mana: 2
     });
+    const fighter = Object.assign({}, this.state.fighter, {
+      isMyTurn: !this.state.fighter.isMyTurn,
+      deck: this.state.fighter.deck.slice(),
+      summoned: this.state.fighter.summoned.slice(),
+      mana: 1
+    });
+
+    this.setState({ wizard, fighter });
   }
 
   summon(player, cardId) {
-    console.log('Summoning', cardId);
-
-    const remainingDeck = this.state[player].deck.filter(card => {
+    const oldPlayerState = this.state[player];
+    const card = find(oldPlayerState.deck, {id: cardId});
+    const remainingDeck = oldPlayerState.deck.filter(card => {
       return card.id !== cardId;
     });
-    const nowSummoned = this.state[player].summoned.concat(
-      find(this.state[player].deck, {id: cardId})
-    );
+    const nowSummoned = oldPlayerState.summoned.concat(card);
+    const mana = oldPlayerState.mana - card.mana;
+    const newPlayerState = Object.assign({}, oldPlayerState, {
+      deck: remainingDeck,
+      summoned: nowSummoned,
+      mana
+    });
 
     this.setState({
-      [player]: {
-        deck: remainingDeck,
-        summoned: nowSummoned,
-        isMyTurn: this.state[player].isMyTurn
-      }
+      [player]: newPlayerState
     });
   }
 
@@ -62,10 +68,12 @@ class Game extends React.Component {
       <div>
         <Player
           name="Player 1"
-          playerClass={wizard.playerClassName}
+          playerClassName={wizardData.playerClassName}
           deck={this.state.wizard.deck}
           summon={this.state.wizard.isMyTurn && this.summon.bind(this, 'wizard')}
           turnOver={this.state.wizard.isMyTurn && this.turnOver.bind(this)}
+          mana={this.state.wizard.mana}
+          health={this.state.wizard.health}
         />
         <Battlefield
           player1Summoned={this.state.wizard.summoned}
@@ -73,10 +81,12 @@ class Game extends React.Component {
         />
         <Player
           name="Player 2"
-          playerClass={fighter.playerClassName}
+          playerClassName={fighterData.playerClassName}
           deck={this.state.fighter.deck}
           summon={this.state.fighter.isMyTurn && this.summon.bind(this, 'fighter')}
           turnOver={this.state.fighter.isMyTurn && this.turnOver.bind(this)}
+          mana={this.state.fighter.mana}
+          health={this.state.fighter.health}
         />
       </div>
     );

@@ -4,7 +4,12 @@ class Battlefield extends React.Component {
   render() {
     return (
       <div className="battlefield">
-        Battlefield
+        <div className="battlefield-player">
+          Player 1
+        </div>
+        <div className="battlefield-player">
+          Player 2
+        </div>
       </div>
     );
   }

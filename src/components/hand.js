@@ -9,7 +9,7 @@ class Hand extends React.Component {
       );
     });
     return (
-      <div>
+      <div className="hand">
         {cards}
       </div>
     );

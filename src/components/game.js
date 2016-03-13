@@ -46,12 +46,12 @@ class Game extends React.Component {
 
   summon(player, cardId) {
     const oldPlayerState = this.state[player];
-    const card = find(oldPlayerState.deck, {id: cardId});
+    const summonedCard = find(oldPlayerState.deck, {id: cardId});
     const remainingDeck = oldPlayerState.deck.filter(card => {
       return card.id !== cardId;
     });
-    const nowSummoned = oldPlayerState.summoned.concat(card);
-    const mana = oldPlayerState.mana - card.mana;
+    const nowSummoned = oldPlayerState.summoned.concat(summonedCard);
+    const mana = oldPlayerState.mana - summonedCard.mana;
     const newPlayerState = Object.assign({}, oldPlayerState, {
       deck: remainingDeck,
       summoned: nowSummoned,

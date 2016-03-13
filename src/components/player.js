@@ -6,7 +6,7 @@ class Player extends React.Component {
     return (
       <div className="player">
         <h1>{this.props.name}</h1>
-        <Hand cards={this.props.deck}/>
+        <Hand cards={this.props.deck} summon={this.props.summon}/>
       </div>
     );
   }

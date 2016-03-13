@@ -2,6 +2,7 @@
   "playerClassName": "Fighter",
   "deck": [
     {
+      "id": "swordsman-1",
       "name": "Swordsman",
       "image": "swordsman.png",
       "mana": 1,
@@ -9,6 +10,7 @@
       "defence": 2
     },
     {
+      "id": "swordsman-2",
       "name": "Swordsman",
       "image": "swordsman.png",
       "mana": 1,

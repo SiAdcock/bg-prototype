@@ -1,7 +1,22 @@
 import React from 'react';
 
 class Hand extends React.Component {
+  summon() {
+    this.props.summon(this.props.card.id);
+  }
   render() {
+    let summonBtn;
+
+    if (this.props.isSummonable) {
+      summonBtn = (
+        <button
+          onClick={this.summon.bind(this)}
+        >
+          Summon
+        </button>
+      );
+    }
+
     return (
       <div className="card">
         <div className="card-name">
@@ -16,6 +31,7 @@ class Hand extends React.Component {
         <div className="card-defence">
           Defence: {this.props.card.defence}
         </div>
+        {summonBtn}
       </div>
     );
   }

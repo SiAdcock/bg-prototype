@@ -2,6 +2,7 @@
   "playerClassName": "Wizard",
   "deck": [
     {
+      "id": "phoenix-1",
       "name": "Phoenix",
       "image": "phoenix.png",
       "mana": 2,
@@ -9,6 +10,7 @@
       "defence": 2
     },
     {
+      "id": "phoenix-2",
       "name": "Phoenix",
       "image": "phoenix.png",
       "mana": 2,

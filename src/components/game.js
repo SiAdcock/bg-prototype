@@ -74,10 +74,8 @@ class Game extends React.Component {
           turnOver={this.state.wizard.isMyTurn && this.turnOver.bind(this)}
           mana={this.state.wizard.mana}
           health={this.state.wizard.health}
-        />
-        <Battlefield
-          player1Summoned={this.state.wizard.summoned}
-          player2Summoned={this.state.fighter.summoned}
+          summoned={this.state.wizard.summoned}
+          position="top"
         />
         <Player
           name="Player 2"
@@ -87,6 +85,8 @@ class Game extends React.Component {
           turnOver={this.state.fighter.isMyTurn && this.turnOver.bind(this)}
           mana={this.state.fighter.mana}
           health={this.state.fighter.health}
+          summoned={this.state.fighter.summoned}
+          position="bottom"
         />
       </div>
     );

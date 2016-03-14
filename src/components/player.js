@@ -1,36 +1,41 @@
 import React from 'react';
-import Card from './card';
+import Battlefield from './battlefield';
+import PlayerInfo from './player-info';
 
 class Player extends React.Component {
   render() {
-    const hand = this.props.deck.map((card) => {
-      const key = `summoned-card-${card.id}`;
-      const isSummonable = this.props.mana - card.mana >= 0;
+    const playerInfo = (
+      <PlayerInfo
+        hand={this.props.deck}
+        turnOver={this.props.turnOver}
+        name={this.props.name}
+        playerClassName={this.props.playerClassName}
+        mana={this.props.mana}
+        health={this.props.health}
+        summon={this.props.summon}
+      />
+    );
 
+    if (this.props.position === 'top') {
       return (
-        <Card
-          key={key}
-          card={card}
-          summon={isSummonable && this.props.summon}
-        />
-      );
-    });
-    let turnOverBtn;
-
-    if (this.props.turnOver) {
-      turnOverBtn = (
-        <button onClick={this.props.turnOver}>Turn Over</button>
+        <div className="player">
+          {playerInfo}
+          <Battlefield
+            summoned={this.props.summoned}
+          />
+        </div>
       );
     }
-    return (
-      <div className="player">
-        <h1>{this.props.name} - {this.props.playerClassName}</h1>
-        <div>Health: {this.props.health}</div>
-        <div>Mana: {this.props.mana}</div>
-        {hand}
-        {turnOverBtn}
-      </div>
-    );
+    else {
+      return (
+        <div className="player">
+          <Battlefield
+            summoned={this.props.summoned}
+          />
+          {playerInfo}
+        </div>
+      );
+    }
   }
 }
 

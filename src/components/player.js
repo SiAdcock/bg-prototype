@@ -1,8 +1,20 @@
 import React from 'react';
-import Hand from './hand';
+import Card from './card';
 
 class Player extends React.Component {
   render() {
+    const hand = this.props.deck.map((card) => {
+      const key = `summoned-card-${card.id}`;
+      const isSummonable = this.props.mana - card.mana >= 0;
+
+      return (
+        <Card
+          key={key}
+          card={card}
+          summon={isSummonable && this.props.summon}
+        />
+      );
+    });
     let turnOverBtn;
 
     if (this.props.turnOver) {
@@ -15,11 +27,7 @@ class Player extends React.Component {
         <h1>{this.props.name} - {this.props.playerClassName}</h1>
         <div>Health: {this.props.health}</div>
         <div>Mana: {this.props.mana}</div>
-        <Hand
-          cards={this.props.deck}
-          summon={this.props.summon}
-          mana={this.props.mana}
-        />
+        {hand}
         {turnOverBtn}
       </div>
     );
